@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/LongLiveCHIEF/co-code.svg?token=SRu6BZ6mnfCwGqHxYw4m&branch=master)](https://travis-ci.com/LongLiveCHIEF/co-code)
 This is neat.
 
 - Diff API
