@@ -15,8 +15,12 @@ var user = {
 }
 
 socket.on("connect", function() {
-    user.name = socket.id;
+//    user.name = socket.id;
 //    console.log(socket.id);
+});
+
+$("#userName").change(function() {
+    user.name = $( this ).val();
 });
 
 myCodeMirror.on("cursorActivity", function(inst) {
@@ -32,31 +36,42 @@ myCodeMirror.on("cursorActivity", function(inst) {
 Element.prototype.remove = function() {
     this.parentElement.removeChild(this);
 }
-var cursors = {
-    
-};
+
+var cursors = {};
+var labels = {};
 
 socket.on("clientPosition", function(position) {
-    if (position.user.name !== socket.id) {
-        console.log(position);
-
+    if (position.user.name !== "" && position.user.name !== user.name) {
         if (cursors[position.user.name]) {
             cursors[position.user.name].remove();
             cursors[position.user.name] = undefined;
+            labels[position.user.name].remove();
+            labels[position.user.name] = undefined;
         }
         
-        var htmlNode = document.createElement("div");
-        htmlNode.className = "cursor";
-        htmlNode.style.backgroundColor = position.user.color;
-        var text = document.createTextNode("Dude");
-        htmlNode.appendChild(text);
+        var cursorNode = document.createElement("div");
+        cursorNode.className = "cursor";
+        cursorNode.style.borderColor = position.user.color;
         
-        cursors[position.user.name] = htmlNode;
+        var labelNode = document.createElement("div");
+        labelNode.className = "label";
+        labelNode.style.backgroundColor = position.user.color;
+        
+        var text = document.createTextNode(position.user.name);
+        labelNode.appendChild(text);
+        
+        cursors[position.user.name] = cursorNode;
+        labels[position.user.name] = labelNode;
         
         myCodeMirror.addWidget({
             line: position.line,
             ch: position.column
-        }, htmlNode);
+        }, cursorNode);
+        
+        myCodeMirror.addWidget({
+            line: position.line,
+            ch: position.column
+        }, labelNode);
     }
 });
 
