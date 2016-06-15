@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var serveStatic = require('serve-static');
 var diff = require('diff');
+var fs = require('fs');
 
 app.use("/vendor", serveStatic("node_modules"));
 app.use('/mdl', serveStatic('./node_modules/material-design-lite'));

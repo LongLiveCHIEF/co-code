@@ -9,9 +9,34 @@ var myCodeMirror = CodeMirror(document.getElementById("editor"), {
     mode: "javascript"
 });
 
+var luma = function(c) {
+    if (!c) {
+        return 100;
+    }
+    var c = c.substring(1);      // strip #
+    var rgb = parseInt(c, 16);   // convert rrggbb to decimal
+    var r = (rgb >> 16) & 0xff;  // extract red
+    var g = (rgb >>  8) & 0xff;  // extract green
+    var b = (rgb >>  0) & 0xff;  // extract blue
+
+    var luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+    return luma;
+}
+
+var stringToColour = function(str) {
+
+    // str to hash
+    for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+
+    // int/hash to hex
+    for (var i = 0, colour = "#"; i < 3; colour += ("00" + ((hash >> i++ * 20) & 0xFF).toString(16)).slice(-2));
+
+    return colour;
+}
+
 var user = {
     name: "",
-    color: '#' + Math.floor(Math.random()*16777215).toString(16)
+    color: "#ffff80"
 }
 
 socket.on("connect", function() {
@@ -21,6 +46,8 @@ socket.on("connect", function() {
 
 $("#userName").change(function() {
     user.name = $( this ).val();
+    console.log(stringToColour(user.name));
+    user.color = stringToColour(user.name);
 });
 
 myCodeMirror.on("cursorActivity", function(inst) {
@@ -55,7 +82,8 @@ socket.on("clientPosition", function(position) {
         
         var labelNode = document.createElement("div");
         labelNode.className = "label";
-        labelNode.style.backgroundColor = position.user.color;
+        labelNode.style.color = buildNiceStyle(position.user.color).foreColor;
+        labelNode.style.backgroundColor = buildNiceStyle(position.user.color).backColor;
         
         var text = document.createTextNode(position.user.name);
         labelNode.appendChild(text);
@@ -116,6 +144,25 @@ $('form').submit(function () {
 
     return false;
 });
+
+function buildNiceStyle(backColor) {
+    var foreColor = "#000";
+    if (luma(backColor) < 50) {
+        foreColor = "#fff";
+    }
+    
+    return {
+        style: "color: " + foreColor + "; background-color: " + backColor,
+        foreColor: foreColor,
+        backColor: backColor
+    };
+}
+
 socket.on('chat message', function (msg) {
-    $('#messages').append($('<li>').text(msg.message));
+    var li = $('<li>');
+    
+    li.append($('<span>').attr("style", buildNiceStyle(msg.user.color).style + "; padding: 5px;").text(msg.user.name));
+    li.append($('<span>').text(" " + msg.message));
+    
+    $('#messages').append(li);
 });
