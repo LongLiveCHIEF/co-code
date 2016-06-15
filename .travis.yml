@@ -1,6 +1,8 @@
 language: node_js
+
 node_js:
   - "stable"
+
 after_success:
   - chmod 600 deploy-key
   - mv deploy-key ~/.ssh/id_rsa
