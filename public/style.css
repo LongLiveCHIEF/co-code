@@ -60,3 +60,10 @@ a.close {
   border-radius:12px;
   color:#fff !important;
 }
+
+.cursor {
+    border: 1px solid #eee;
+    background-color: #ff9;
+    padding: 3px;
+    z-index: 1000;
+}

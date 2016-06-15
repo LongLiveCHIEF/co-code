@@ -4,7 +4,7 @@
   "description": "Collaboration Software for the Strong",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Success: no tests specified\" && exit 0",
     "start": "nodemon --watch . -e js -- index.js"
   },
   "repository": {
