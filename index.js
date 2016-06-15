@@ -10,10 +10,7 @@ var io = require('socket.io')(http);
 
 var fileContents = "This is a file\nWe should change it\nThis is a third line";
 
-
-app.get("/", function (req, res) {
-    res.sendfile('public/index.html');
-});
+app.use("/", serveStatic("public"));
 
 io.on('connection', function(socket) {
     console.log("User in...");
@@ -32,9 +29,9 @@ io.on('connection', function(socket) {
         
         fileContents = diff.applyPatch(fileContents, msg);
         
-        console.log("RESULT CHANGE");
-        console.log("=================");
-        console.log(fileContents);
+//        console.log("RESULT CHANGE");
+//        console.log("=================");
+//        console.log(fileContents);
         // Update the file here
         //io.emit('outgoing change', fileContents);
     });

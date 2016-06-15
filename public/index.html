@@ -2,110 +2,24 @@
 <html>
 
 <head>
-    <title>Socket.IO chat</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font: 13px Helvetica, Arial;
-        }
-        
-        form {
-            background: #000;
-            padding: 3px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-        
-        form input {
-            border: 0;
-            padding: 10px;
-            width: 90%;
-            margin-right: .5%;
-        }
-        
-        form button {
-            width: 9%;
-            background: rgb(130, 224, 255);
-            border: none;
-            padding: 10px;
-        }
-        
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        #messages li {
-            padding: 5px 10px;
-        }
-        
-        #messages li:nth-child(odd) {
-            background: #eee;
-        }
-    </style>
-</head>
-
-<body>
+    <title>Hacker Collab Editor</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/vendor/diff/dist/diff.js"></script>
     <script src="/vendor/codemirror/lib/codemirror.js"></script>
-    <link rel="stylesheet" href="/vendor/codemirror/lib/codemirror.css">
     <script src="/vendor/codemirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="/vendor/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
     <div id="editor"></div>
     <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" />
         <button>Send</button>
     </form>
-    <script>
-        var serverUpdate = false;
-        var beforeChange = "";
-        
-        var myCodeMirror = CodeMirror(document.getElementById("editor"), {
-            value: "",
-            lineNumbers: true,
-            mode: "javascript"
-        });
-        
-        myCodeMirror.on("beforeChange", function(inst, change) {
-            beforeChange = myCodeMirror.getValue();
-        });
-        
-        myCodeMirror.on("change", function(inst, change) {
-            if (serverUpdate) {
-                return;
-            }
-            
-            var afterChange = myCodeMirror.getValue();
-            var diff = JsDiff.createPatch("stuff.txt", beforeChange, afterChange);
-            socket.emit("client change", diff);
-        });
-
-        var socket = io();
-        $('form').submit(function () {
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-
-            return false;
-        });
-        socket.on('chat message', function (msg) {
-            $('#messages').append($('<li>').text(msg));
-        });
-        socket.on('server change', function (msg) {
-            serverUpdate = true;
-            
-            myCodeMirror.setValue(msg);
-            serverUpdate = false;
-        });
-    </script>
+    <script src="/app.js"></script>
 </body>
 
 </html>
