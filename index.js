@@ -15,6 +15,9 @@ app.get("/", function (req, res) {
 });
 
 io.on('connection', function(socket) {
+    console.log("User in...");
+    io.emit('server change', fileContents);
+    
     socket.on('disconnect', function(msg) {
         console.log("User out...");
     });
@@ -23,16 +26,17 @@ io.on('connection', function(socket) {
         io.emit('chat message', msg);
     });
     
-    socket.on('incoming change', function(msg) {
+    socket.on('client change', function(msg) {
         console.log(msg);
+        
         // Update the file here
         //io.emit('outgoing change', fileContents);
     });
 });
 
 setInterval(function() {
-    io.emit('outgoing change', fileContents);
-}, 3000);
+    io.emit('server change', fileContents);
+}, 5000);
 
 http.listen(8080, function() {
     console.log("On 8080...");

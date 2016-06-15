@@ -65,14 +65,20 @@
         <button>Send</button>
     </form>
     <script>
+        var serverLoaded = false;
         var myCodeMirror = CodeMirror(document.getElementById("editor"), {
-            value: "function myScript()\n\t{return 100;}\n",
+            value: "",
             lineNumbers: true,
             mode: "javascript"
         });
         
         myCodeMirror.on("change", function(inst, change) {
-            socket.emit("incoming change", change);
+            if (!serverLoaded) {
+                serverLoaded = true;
+                return;
+            }
+            
+            socket.emit("client change", change);
         });
 
         var socket = io();
@@ -85,7 +91,7 @@
         socket.on('chat message', function (msg) {
             $('#messages').append($('<li>').text(msg));
         });
-        socket.on('outgoing change', function (msg) {
+        socket.on('server change', function (msg) {
             myCodeMirror.setValue(msg);
         });
     </script>
