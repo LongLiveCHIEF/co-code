@@ -24,16 +24,11 @@ io.on('connection', function(socket) {
         io.emit('chat message', msg);
     });
     
-    socket.on('client change', function(msg) {
+    socket.on('clientDiff', function(msg) {
         console.log(msg);
         
-        fileContents = diff.applyPatch(fileContents, msg);
+        fileContents = diff.applyPatch(fileContents, msg.diff);
         
-//        console.log("RESULT CHANGE");
-//        console.log("=================");
-//        console.log(fileContents);
-        // Update the file here
-        //io.emit('outgoing change', fileContents);
     });
 });
 
