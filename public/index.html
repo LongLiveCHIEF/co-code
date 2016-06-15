@@ -10,16 +10,73 @@
     <script src="/vendor/codemirror/mode/javascript/javascript.js"></script>
     <link rel="stylesheet" href="/vendor/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="/mdl/material.min.css">
+    <script src="/mdl/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
 </head>
 
 <body>
-    <div id="editor"></div>
-    <ul id="messages"></ul>
-    <form action="">
-        <input id="m" autocomplete="off" />
-        <button>Send</button>
-    </form>
-    <script src="/app.js"></script>
+  <!-- No header, and the drawer stays open on larger screens (fixed drawer). -->
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+    <header class="mdl-layout__header">
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <li class="tab-title active">
+            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
+            <a href="#" class="close">&times;</a>
+          </li>
+          <li class="tab-title">
+            <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 2</a>
+            <a href="#" class="close">&times;</a>
+          </li>
+          <li class="tab-title">
+            <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 3</a>
+          </li>
+      </div>
+    </header>
+    <!-- Left Nav -->
+    <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <span class="mdl-layout-title">File Explorer</span>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="">Link1</a>
+          <a class="mdl-navigation__link" href="">Link2</a>
+          <a class="mdl-navigation__link" href="">Link3</a>
+          <a class="mdl-navigation__link" href="">Link4</a>
+        </nav>
+        <span class="mdl-layout-title">Users</span>
+        <li class="mdl-list__item">
+          <span class="mdl-list__item-primary-content nav_users">
+            <i class="material-icons mdl-list__item-icon">person</i>
+            Brian V
+          </span>
+        </li>
+        <li class="mdl-list__item">
+          <span class="mdl-list__item-primary-content nav_users">
+            <i class="material-icons mdl-list__item-icon nav_users">person</i>
+            Matt D
+          </span>
+        </li>
+        <li class="mdl-list__item">
+          <span class="mdl-list__item-primary-content nav_users">
+            <i class="material-icons mdl-list__item-icon">person</i>
+            Paul K
+          </span>
+        </li>
+    </div>
+    <main class="mdl-layout__content">
+      <div id="editor" class="page-content"><!-- Your content goes here --></div>
+      <ul id="messages"></ul>
+      <form action="">
+          <input id="m" autocomplete="off" />
+          <button>Send</button>
+      </form>
+      <script src="/app.js"></script>
+    </main>
+  </div>
 </body>
 
 </html>
