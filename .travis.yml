@@ -1,8 +1,9 @@
 language: node_js
-
 node_js:
   - "stable"
-
+before_script:
+  - echo -e "Host 104.236.41.203\n\tnStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config 
 after_success:
   - chmod 600 deploy-key
   - mv deploy-key ~/.ssh/id_rsa
