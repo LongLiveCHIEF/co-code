@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/LongLiveCHIEF/co-code#readme",
   "dependencies": {
+    "codemirror": "^5.15.2",
     "express": "^4.13.4",
+    "serve-static": "^1.11.1",
     "socket.io": "^1.4.6"
   }
 }
