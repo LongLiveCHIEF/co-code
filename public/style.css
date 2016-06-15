@@ -63,6 +63,14 @@ a.close {
 
 .cursor {
     border: 1px solid #eee;
+    z-index: 1001;
+    margin-top: -10px;
+    height: 20px;
+    width: 1px;
+}
+
+.label {
+    border: 1px solid #eee;
     background-color: #ff9;
     padding: 3px;
     z-index: 1000;
