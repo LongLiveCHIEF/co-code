@@ -55,6 +55,7 @@
 <body>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/vendor/diff/dist/diff.js"></script>
     <script src="/vendor/codemirror/lib/codemirror.js"></script>
     <link rel="stylesheet" href="/vendor/codemirror/lib/codemirror.css">
     <script src="/vendor/codemirror/mode/javascript/javascript.js"></script>
@@ -65,20 +66,27 @@
         <button>Send</button>
     </form>
     <script>
-        var serverLoaded = false;
+        var serverUpdate = false;
+        var beforeChange = "";
+        
         var myCodeMirror = CodeMirror(document.getElementById("editor"), {
             value: "",
             lineNumbers: true,
             mode: "javascript"
         });
         
+        myCodeMirror.on("beforeChange", function(inst, change) {
+            beforeChange = myCodeMirror.getValue();
+        });
+        
         myCodeMirror.on("change", function(inst, change) {
-            if (!serverLoaded) {
-                serverLoaded = true;
+            if (serverUpdate) {
                 return;
             }
             
-            socket.emit("client change", change);
+            var afterChange = myCodeMirror.getValue();
+            var diff = JsDiff.createPatch("stuff.txt", beforeChange, afterChange);
+            socket.emit("client change", diff);
         });
 
         var socket = io();
@@ -92,7 +100,9 @@
             $('#messages').append($('<li>').text(msg));
         });
         socket.on('server change', function (msg) {
+            serverUpdate = true;
             myCodeMirror.setValue(msg);
+            serverUpdate = false;
         });
     </script>
 </body>

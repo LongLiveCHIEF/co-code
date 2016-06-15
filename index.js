@@ -1,13 +1,14 @@
 var express = require('express');
 var app = express();
 var serveStatic = require('serve-static');
+var diff = require('diff');
 
 app.use("/vendor", serveStatic("node_modules"));
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var fileContents = "This is a file\nWe should change it";
+var fileContents = "This is a file\nWe should change it\nThis is a third line";
 
 
 app.get("/", function (req, res) {
@@ -29,6 +30,11 @@ io.on('connection', function(socket) {
     socket.on('client change', function(msg) {
         console.log(msg);
         
+        fileContents = diff.applyPatch(fileContents, msg);
+        
+        console.log("RESULT CHANGE");
+        console.log("=================");
+        console.log(fileContents);
         // Update the file here
         //io.emit('outgoing change', fileContents);
     });
