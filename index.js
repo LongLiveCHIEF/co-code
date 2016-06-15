@@ -25,10 +25,11 @@ io.on('connection', function(socket) {
     });
     
     socket.on('clientDiff', function(msg) {
-        console.log(msg);
-        
-        fileContents = diff.applyPatch(fileContents, msg.diff);
-        
+        fileContents = diff.applyPatch(fileContents, msg.diff);        
+    });
+    
+    socket.on('clientPosition', function(msg) {
+        io.emit('clientPosition', msg);
     });
 });
 

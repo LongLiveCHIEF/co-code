@@ -43,3 +43,10 @@ form button {
 #messages li:nth-child(odd) {
     background: #eee;
 }
+
+.cursor {
+    border: 1px solid #eee;
+    background-color: #ff9;
+    padding: 3px;
+    z-index: 1000;
+}

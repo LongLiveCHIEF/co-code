@@ -9,18 +9,55 @@ var myCodeMirror = CodeMirror(document.getElementById("editor"), {
     mode: "javascript"
 });
 
+var user = {
+    name: "",
+    color: '#' + Math.floor(Math.random()*16777215).toString(16)
+}
+
 socket.on("connect", function() {
+    user.name = socket.id;
 //    console.log(socket.id);
 });
 
 myCodeMirror.on("cursorActivity", function(inst) {
     socket.emit("clientPosition", {
-        "user": socket.id,
+        "user": user,
         "project": "main",
         "file": "/stuff.txt",
         "line": inst.getCursor().line,
         "column": inst.getCursor().ch
     });
+});
+
+Element.prototype.remove = function() {
+    this.parentElement.removeChild(this);
+}
+var cursors = {
+    
+};
+
+socket.on("clientPosition", function(position) {
+    if (position.user.name !== socket.id) {
+        console.log(position);
+
+        if (cursors[position.user.name]) {
+            cursors[position.user.name].remove();
+            cursors[position.user.name] = undefined;
+        }
+        
+        var htmlNode = document.createElement("div");
+        htmlNode.className = "cursor";
+        htmlNode.style.backgroundColor = position.user.color;
+        var text = document.createTextNode("Dude");
+        htmlNode.appendChild(text);
+        
+        cursors[position.user.name] = htmlNode;
+        
+        myCodeMirror.addWidget({
+            line: position.line,
+            ch: position.column
+        }, htmlNode);
+    }
 });
 
 myCodeMirror.on("beforeChange", function(inst, change) {
@@ -35,7 +72,7 @@ myCodeMirror.on("change", function(inst, change) {
     var afterChange = myCodeMirror.getValue();
     var diff = JsDiff.createPatch("stuff.txt", beforeChange, afterChange);
     socket.emit("clientDiff", {
-        "user": socket.id,
+        "user": user,
         "project": "main",
         "file": "/stuff.txt",
         "diff": diff
