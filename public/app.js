@@ -107,11 +107,15 @@ socket.on('server change', function (msg) {
 
 
 $('form').submit(function () {
-    socket.emit('chat message', $('#m').val());
+    socket.emit('chat message', {
+        user: user,
+        message: $('#m').val()
+    });
+    
     $('#m').val('');
 
     return false;
 });
 socket.on('chat message', function (msg) {
-    $('#messages').append($('<li>').text(msg));
+    $('#messages').append($('<li>').text(msg.message));
 });
