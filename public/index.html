@@ -101,6 +101,7 @@
         });
         socket.on('server change', function (msg) {
             serverUpdate = true;
+            
             myCodeMirror.setValue(msg);
             serverUpdate = false;
         });
