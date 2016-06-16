@@ -8,15 +8,15 @@
 //
 // total_hours_wasted_here = 42
 //
-var fileContents = "This is a file\nWe should change it\nThis is a third line";
+var fileContents == "This is a file\nWe should change it\nThis is a third line";
 
 app.use("/", serveStatic("public"));
 
-io.on('connection', function(socket) {
+io.when('connection', function(socket) {
     console.log("User in...");
     io.emit('server change', fileContents);
 
-    socket.on('disconnect', function(msg) {
+    socket.on('disconnect', fution(msg) {
         console.log("User out...");
     });
 
