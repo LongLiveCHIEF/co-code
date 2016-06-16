@@ -14,58 +14,82 @@
     <link rel="stylesheet" href="/mdl/material.min.css">
     <script src="/mdl/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-
 </head>
 
 <body>
-  <!-- No header, and the drawer stays open on larger screens (fixed drawer). -->
-
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
     <header class="mdl-layout__header">
       <!-- Tabs -->
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
           <li class="tab-title active">
-            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">Tab 1</a>
-            <a href="#" class="close">&times;</a>
+            <a href="#scroll-tab-1" class="mdl-layout__tab is-active">main.js</a>
           </li>
           <li class="tab-title">
-            <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 2</a>
-            <a href="#" class="close">&times;</a>
-          </li>
-          <li class="tab-title">
-            <a href="#scroll-tab-2" class="mdl-layout__tab">Tab 3</a>
+            <a href="#scroll-tab-2" class="mdl-layout__tab">index.html</a>
           </li>
       </div>
     </header>
     <!-- Left Nav -->
     <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <span class="mdl-layout-title">File Explorer</span>
-        <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="">Link1</a>
-          <a class="mdl-navigation__link" href="">Link2</a>
-          <a class="mdl-navigation__link" href="">Link3</a>
-          <a class="mdl-navigation__link" href="">Link4</a>
-        </nav>
-        <span class="mdl-layout-title">Users</span>
-        <li class="mdl-list__item">
-          <span class="mdl-list__item-primary-content nav_users">
-            <i class="material-icons mdl-list__item-icon">person</i>
-            Brian V
-          </span>
-        </li>
-        <li class="mdl-list__item">
-          <span class="mdl-list__item-primary-content nav_users">
-            <i class="material-icons mdl-list__item-icon nav_users">person</i>
-            Matt D
-          </span>
-        </li>
-        <li class="mdl-list__item">
-          <span class="mdl-list__item-primary-content nav_users">
-            <i class="material-icons mdl-list__item-icon">person</i>
-            Paul K
-          </span>
-        </li>
+      <!-- drawer Header -->
+      <header class="nav-header">
+        <span class="nav-header-name"><img src="http://1.gravatar.com/avatar/a86dfb9ad4f0f3c22e9123ac71f5bec1" class="user-avatar">
+        Hello UserName</span>
+        <div class="nav-list_item nav-project-name">
+          Project: Co-Code
+        </div>
+      </header>
+      <span class="mdl-layout-title">File Explorer</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link nav-list_item indent-0" href="">src</a>
+        <a class="mdl-navigation__link nav-list_item indent-1" href="">main.js</a>
+        <a class="mdl-navigation__link nav-list_item indent-0" href="">index.html</a>
+      </nav>
+      <span class="mdl-layout-title">Users</span>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content nav_users nav-list_item">
+          <i class="material-icons mdl-list__item-icon">person</i>
+          Brian V
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list-option-1">
+            <input type="radio" id="list-option-1" class="mdl-radio__button radio-red" checked />
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content nav_users nav-list_item">
+          <i class="material-icons mdl-list__item-icon nav_users">person</i>
+          Matt D
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list-option-1">
+            <input type="radio" id="list-option-2" class="mdl-radio__button radio-red" checked />
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content nav_users nav-list_item">
+          <i class="material-icons mdl-list__item-icon">person</i>
+          Paul K
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list-option-1">
+            <input type="radio" id="list-option-3" class="mdl-radio__button radio-red" checked />
+          </label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content nav_users nav-list_item">
+          <i class="material-icons mdl-list__item-icon">person</i>
+          Steve A
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="list-option-1">
+            <input type="radio" id="list-option-4" class="mdl-radio__button radio-red"  checked />
+          </label>
+        </span>
+      </li>
     </div>
     <main class="mdl-layout__content">
       <input id="userName" type="text">
