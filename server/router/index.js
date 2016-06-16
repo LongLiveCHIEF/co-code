@@ -7,7 +7,7 @@ console.log(`public path: ${publicPath}`);
 router.use('/css', static(publicPath));
 router.use('/js', static(publicPath));
 router.use(require('./workspaceRouter'));
-router.get('/', static(publicPath));
+router.get('/', static(publicPath + '/index.html'));
 
 
 module.exports = router;

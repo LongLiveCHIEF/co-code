@@ -18,7 +18,7 @@ workspaceRouter.use('/:username/:projectname', function(req, res, next){
 });
 
 workspaceRouter.get('/:username/:projectname', function(req, res){
-  res.sendFile(publicPath + '/index.html');
+  res.sendFile(publicPath + '/workspace.html');
 });
 
 
