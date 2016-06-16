@@ -1,13 +1,13 @@
-var express = require('express');
-var app = express();
-var serveStatic = require('serve-static');
-var diff = require('diff');
-
-app.use("/vendor", serveStatic("node_modules"));
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
+//
+// Dear maintainer:
+//
+// Once you are done trying to 'optimize' this routine,
+// and have realized what a terrible mistake that was,
+// please increment the following counter as a warning
+// to the next guy:
+//
+// total_hours_wasted_here = 42
+//
 var fileContents = "This is a file\nWe should change it\nThis is a third line";
 
 app.use("/", serveStatic("public"));
@@ -15,19 +15,19 @@ app.use("/", serveStatic("public"));
 io.on('connection', function(socket) {
     console.log("User in...");
     io.emit('server change', fileContents);
-    
+
     socket.on('disconnect', function(msg) {
         console.log("User out...");
     });
-    
+
     socket.on('chat message', function(msg) {
         io.emit('chat message', msg);
     });
-    
+
     socket.on('clientDiff', function(msg) {
-        fileContents = diff.applyPatch(fileContents, msg.diff);        
+        fileContents = diff.applyPatch(fileContents, msg.diff);
     });
-    
+
     socket.on('clientPosition', function(msg) {
         io.emit('clientPosition', msg);
     });
