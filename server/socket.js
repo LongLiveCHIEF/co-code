@@ -1,11 +1,7 @@
-var diff = require('diff');
-
-function socketAPI(http) {
-    var fileContents = "This is a file\nWe should change it\nThis is a third line";
-
-    var io = require('socket.io')(http);
+var socketAPI = function socketAPI(io) {
+var fileContents = "stuff";
     io.on('connection', function (socket) {
-        console.log("User in...");
+        console.log(`new client connection: ${socket.client.conn.id}`);
         socket.emit('server change', fileContents);
 
         socket.on('disconnect', function (msg) {
@@ -29,7 +25,16 @@ function socketAPI(http) {
         socket.on('clientPosition', function (msg) {
             io.emit('clientPosition', msg);
         });
+<<<<<<< b33e63d668aa426a09687aefb52e7afb71cf5b22
+=======
+
+        setInterval(function () {
+            socket.emit('server change', fileContents);
+        }, 5000);
+>>>>>>> restructure io.Manager
     });
+
+    return io;
 
 }
 
