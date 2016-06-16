@@ -17,8 +17,12 @@ function socketAPI(http) {
         });
 
         socket.on('clientDiff', function (msg) {
-            console.log(msg);
-            fileContents = diff.applyPatch(fileContents, msg.diff);
+            try {
+                fileContents = diff.applyPatch(fileContents, msg.diff);
+            } catch (e) {
+                console.log(e);
+            }
+            
             io.emit('server change', fileContents);
         });
 
