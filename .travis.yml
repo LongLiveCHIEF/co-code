@@ -1,3 +1,6 @@
+branches:
+  only:
+  - master
 language: node_js
 node_js:
   - "stable"
@@ -7,7 +10,7 @@ before_script:
 after_success:
   - chmod 600 deploy-key
   - mv deploy-key ~/.ssh/id_rsa
-  - git remote add deploy ssh://root@104.236.41.203/var/lib/co-code/site.git
+  - git remote add deploy ssh://root@104.236.41.203:/var/lib/co-code/
   - git push deploy
 
 before_install:
