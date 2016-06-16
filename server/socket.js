@@ -1,6 +1,8 @@
 var fs = require("fs");
+var diff = require("diff");
+
+var fileContents = fs.readFileSync('./satellite/LongLiveCHIEF/funky_potatoes/stuff.js', 'utf8');
 var socketAPI = function socketAPI(io) {
-    var fileContents = fs.readFileSync('./satellite/LongLiveCHIEF/funky_potatoes/stuff.js', 'utf8');
     io.on('connection', function (socket) {
         console.log(`new client connection: ${socket.client.conn.id}`);
         socket.emit('server change', fileContents);
