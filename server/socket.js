@@ -10,7 +10,7 @@ var socketAPI = function socketAPI(io) {
         });
 
         socket.on('chat message', function (msg) {
-            socket.emit('chat message', msg);
+            io.emit('chat message', msg);
         });
 
         socket.on('clientDiff', function (msg) {
