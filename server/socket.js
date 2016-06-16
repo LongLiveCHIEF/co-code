@@ -17,16 +17,14 @@ function socketAPI(http) {
         });
 
         socket.on('clientDiff', function (msg) {
+            console.log(msg);
             fileContents = diff.applyPatch(fileContents, msg.diff);
+            io.emit('server change', fileContents);
         });
 
         socket.on('clientPosition', function (msg) {
-            socket.emit('clientPosition', msg);
+            io.emit('clientPosition', msg);
         });
-        
-        setInterval(function () {
-            socket.emit('server change', fileContents);
-        }, 5000);
     });
 
 }
