@@ -1,24 +1,26 @@
 var {Router, static} = require('express');
-var router = Router();
+var workspaceRouter = Router();
 var path = require('path');
-var publicPath= path.join(__dirname, '../../public');
-console.log(`public path: ${publicPath}`);
+var publicPath = path.join(__dirname, '../../public');
 
-router.use('/css', static(publicPath));
-router.use('/js', static(publicPath));
-
-router.param('username', function(req, res, next, id){
+workspaceRouter.param('username', function(req, res, next, id){
   req.username = id;
   next();
 });
 
-router.param('projectname', function(req, res, next, id){
+workspaceRouter.param('projectname', function(req, res, next, id){
   req.projectname = id;
   next();
 });
-router.get('/:username/:projectname', function(req, res){
-  res.send(`${req.username}\r\n${req.projectname}`);
-})
+workspaceRouter.use('/:username/:projectname', function(req, res, next){
+  console.log(req.projectname)
+  next();
+});
+
+workspaceRouter.get('/:username/:projectname', function(req, res){
+  res.sendFile(publicPath + '/index.html');
+});
 
 
-module.exports = router;
+
+module.exports = workspaceRouter;
